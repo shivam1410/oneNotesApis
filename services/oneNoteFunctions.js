@@ -6,7 +6,7 @@ const url = require('url');
 
 async function getUserDetails(req,res){
     const token = await returnToken();
-    const url = config.graph_url + `me`
+    const url = config.graph_url + `me`;
     const headers = {
         "Content-type": "application/json",
         "Authorization": "Bearer "+ token,
@@ -34,7 +34,7 @@ async function getUserDetails(req,res){
 
 async function getAllNotebooks(req,res){
     const token = await returnToken();
-    const url = config.base_URL + "/notebooks"
+    const url = config.base_URL + "/notebooks";
     const headers = {
         "Authorization": "Bearer "+ token,
         "accept": "application/json"
@@ -46,7 +46,10 @@ async function getAllNotebooks(req,res){
         headers
     })
     .then(d=>{
-        return res.json(d.data.value.map(a=>({id: a.id, title: a.displayName})))
+        return res.json(d.data.value.map(a=>({
+            id: a.id, 
+            title: a.displayName
+        })))
     })
     .catch(e=>{
         console.error(e.response.data)
@@ -70,7 +73,11 @@ async function getAllsectionsInNotebook(req,res){
         headers
     })
     .then(d=>{
-        return res.json(d.data.value.map(a=>({id: a.id, title: a.displayName, notebook: a.parentNotebook.displayName})))
+        return res.json(d.data.value.map(a=>({
+            id: a.id, 
+            title: a.displayName, 
+            notebook: a.parentNotebook.displayName
+        })))
     })
     .catch(e=>{
         console.error(e.response.data)
@@ -94,7 +101,11 @@ async function getAllPagesInASection(req,res){
         headers
     })
     .then(d=>{
-        return res.json(d.data.value.map(a=>({id: a.id, title: a.title, section: a.parentSection.displayName})))
+        return res.json(d.data.value.map(a=>({
+            id: a.id, 
+            title: a.title, 
+            section: a.parentSection.displayName
+        })))
     })
     .catch(e=>{
         console.error(e.response.data)
@@ -122,7 +133,10 @@ async function createOneNoteNotebook(req,res){
         data
     })
     .then(d=>{
-        res.json({id: d.data.id, title: d.data.displayName})
+        res.json({
+            id: d.data.id, 
+            title: d.data.displayName
+        })
     })
     .catch(e=>{
         console.error(e.response.data)
@@ -135,7 +149,7 @@ async function createOneNoteNotebook(req,res){
 async function createSections(req,res){
     try{
         if(req.query.notebookId){
-            const sections = url.parse(req.url,true).query.sections.split(",");
+            const sections = url.parse(req.url,true).query.sections.split(","); // ',' separated section names
             // const Sections = fse.readdirSync('./notes'); // extract from folder
 
             const response_array = [];
@@ -182,6 +196,7 @@ async function createOneSection(name,notebookId){
     })
 }
 
+// Now, posting all the paegs from ./notes(google archive of keep notes) to one notes
 async function postPagesToAllSections(req,res){
     const token = await returnToken();
     // const url = config.base_URL + "/notebooks/" + req.query.notebookId + "/sections/";
@@ -259,19 +274,11 @@ async function postOnePagetoASection(page, sectionId){
     
 }
 
-
 async function returnToken(){
     const tokenObject = await fse.readJsonSync('./Cred/token_Object.json');
     return tokenObject.access_token;
 }
 
-// function migrateSIngleNOtesToOneNotes(){
-
-// }
-
-// function createNotebook(){
-
-// }
 
 module.exports = {
     getAllNotebooks,
@@ -282,12 +289,6 @@ module.exports = {
     createSections,
     postPagesToAllSections,
 }
-
-
-
-
-
-
 
 
 

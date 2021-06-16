@@ -1,1 +1,8 @@
-{"token_type":"","scope":"Notes.Create Notes.Read Notes.Read.All Notes.ReadWrite Notes.ReadWrite.All User.Read","expires_in":3600,"ext_expires_in":3600,"access_token":"","startTime":1616062168089}
+{
+    "token_type":"Bearer",
+    "scope":"Notes.Create Notes.Read Notes.Read.All Notes.ReadWrite Notes.ReadWrite.All User.Read",
+    "expires_in":3600,
+    "ext_expires_in":3600,
+    "access_token":"",
+    "startTime":1617292559752
+}

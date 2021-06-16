@@ -4,12 +4,11 @@ const axios = require("axios");
 const scope = "Notes.Create Notes.Read Notes.Read.All Notes.ReadWrite Notes.ReadWrite.All User.Read";
 const querystring = require('querystring');
 const fse = require("fs-extra");
-const { nextTick } = require("process");
 
 
 function giveConsent(req,res){
     try{
-        console.log("consent screen will appear")
+        let url = "https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?"
         const options = {
             client_id: cred.clientID,
             response_type:"code",
@@ -19,10 +18,12 @@ function giveConsent(req,res){
             state:1,
             prompt:"consent"
         }
-        url = config.consent_URL + querystring.stringify(options);
+        url = url + querystring.stringify(options);
+
         return res.json({url})
     } catch(e){
-        console.log("CONSENT SCREEN ERROR")
+        console.log(e, "CONSENT SCREEN ERROR")
+        res.json({e})
     }
 }
 
@@ -48,7 +49,7 @@ async function getAccessTokenByUsingCode(req,res){
             data,
         })
         .then(async tokenObject=>{
-            console.log(Object.keys(tokenObject.data));
+            console.log(tokenObject.data);
             console.log("writing refresh token to json")
             tokenObject.data.startTime = +Date.now();
             await fse.writeJSONSync("./Cred/token_Object.json", tokenObject.data)
@@ -87,6 +88,7 @@ async function getAccessTokenByRefreshToken(){
     })
     .then(async tokenObject =>{
         tokenObject.data.startTime = +Date.now();
+        console.log(tokenObject)
         fse.writeJSONSync("./Cred/token_Object.json", tokenObject.data)
     })
     .catch(e=>{
@@ -98,16 +100,18 @@ async function authenticate(req,res,next){
     const tokenObject = await fse.readJsonSync('./Cred/token_Object.json');
     if(tokenObject.access_token){
         // if token is going to expire in 500ms, then call refresh token,
+        // let tokenObject.expires_in = 500ms
         // other wise its okay,
         // then call next
         // if control reach to next function, before the response of refresh token api response, it will have old token, that is already valid,
         // and if it took more time to reach then 500ms, then at that time it will have new token
-        // x = response time of refresh, y time when next() needs token, lets start woth 0, and token is going to expire in 500ms
+        // x = response time of refresh, y time when next() needs token, lets start with 0, and token is going to expire in 500ms
         // if(x<=50000)then [y can be anything], if(x>50000)then [y<50000 or y>x]
         const currentTime = +Date.now();
-        if((tokenObject.expires_in)*1000 -(currentTime - tokenObject.startTime) <= 50000){
-            console.log((tokenObject.expires_in)*1000 -(currentTime - tokenObject.startTime))
-            console.log("token is going to expire in", tokenObject.expires_in, currentTime,  tokenObject.startTime)
+        // if((tokenObject.expires_in)*1000 -(currentTime - tokenObject.startTime) <= 50000){
+        if((currentTime - tokenObject.startTime) <= (tokenObject.expires_in)*1000 ){
+            console.log((currentTime - tokenObject.startTime), (tokenObject.expires_in)*1000);
+            console.log("token is going to expire in", tokenObject.expires_in, currentTime,  tokenObject.startTime);
             getAccessTokenByRefreshToken();
             next();
         } else{
@@ -123,6 +127,7 @@ async function authenticate(req,res,next){
 
 module.exports = {
     getAccessTokenByUsingCode,
+    getAccessTokenByRefreshToken,
     giveConsent,
     authenticate,
 }

@@ -9,7 +9,8 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "refresh_token.json", "token_Object.json"
+      "refresh_token.json",
+      "token_Object.json"
     ],
     "delay": "2500"
   },
@@ -21,8 +22,7 @@
     "form-data": "^4.0.0",
     "fs-extra": "^9.1.0",
     "nodemon": "^2.0.7",
-    "path": "^0.12.7",
+    "path": "^0.12.7"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
