@@ -43,39 +43,48 @@ GET /auth/code
 GET /refreshtoken
 ```
 
+3. Check if you're connected
 ```
 // Basics
 # See if you're authenticated
 GET /Me
+```
 
+4. Get all notebooks
+```
 # To get all your notebooks
 GET /notebooks
 ```
 
+5. Get all Sections
 ```
 // ?notebookId=
 # To get all your sections, in a notebook ( provide notebookID)
 GET /sections',
 ```
 
+6. Get all Pages
 ```
 // ?sectionId
 # To get all your pages, in a section ( provide sectionID)
 GET /pages',
 ```
 
+7. Create A Notebook
 ```
 // ?name
 # To create a notebook,(provide name in query)
 post /createNotebook',
 ```
 
+8. Create sections
 ```
 // ?notebookId & sections 
 # To create sections ,(provide notebookID and array of section names in query)
 post /createsections
 ```
 
+9. Create pages
 ```
 // ?[{sectionId,sectionName}]
 # To post pages to all section, but you must have pages, ( I have download my google archive keep notes, and used the function sortFileIntoFolder.js and then post all the notes/pages section-wise(folder-wise))
