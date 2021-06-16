@@ -74,14 +74,14 @@ GET /pages',
 ```
 # To create a notebook,(provide name in query)
 // ?name=""
-post /createNotebook',
+POST /createNotebook',
 ```
 
 8. Create sections
 ```
 # To create sections ,(provide notebookID and array of section names in query)
 // ?notebookId=""&sections=[] 
-post /createsections
+POST /createsections
 ```
 
 9. Create pages
@@ -89,7 +89,7 @@ post /createsections
 # To post pages to all section, but you must have pages, ( I have download my google archive keep notes, and used the function sortFileIntoFolder.js and</br>
 then post all the notes/pages section-wise(folder-wise))
 // ?[{sectionId="",sectionName=""}]
-post /postPagesToAllSections
+POST /postPagesToAllSections
 
 // a function to post all notes of all sections 
 // to post google archive keep notes to one notes
