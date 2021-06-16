@@ -21,12 +21,66 @@ Implemetation of microsoft Oauth 2.0 code base Authorization, and APIs to read a
 1. Node.js
 2. Fs-extra.js
 3. axios
-4. Microsoft Azure *(new)*
-5. OneNotes APIs *(new)*
+4. Microsoft Azure *(to register the app)*
+5. OneNotes APIs *(well!!)*
 6. Postmen
 7. Google Chrome
-<<<<<<< HEAD
 8. Vs Code
-=======
-8. Vs Code
->>>>>>> 0fbbdc09fcf37f6bffcf9a6ef716cf3e1bd9459f
+
+# USE cases
+1. Test api
+``` GET /api```
+
+2. Auth APIs
+```
+# to get the consent screen
+GET /auth/consent
+
+# It will be called automatically (as microsoft send the response. ref Medium arcticle)
+GET /auth/code
+
+# *(there's no need for this)
+GET /refreshtoken
+```
+
+```
+// Basics
+# See if you're authenticated
+GET /Me
+
+# To get all your notebooks
+GET /notebooks
+```
+
+```
+// ?notebookId=
+# To get all your sections, in a notebook ( provide notebookID)
+GET /sections',
+```
+
+```
+// ?sectionId
+# To get all your pages, in a section ( provide sectionID)
+GET /pages',
+```
+
+```
+// ?name
+# To create a notebook,(provide name in query)
+post /createNotebook',
+```
+
+```
+// ?notebookId & sections 
+# To create sections ,(provide notebookID and array of section names in query)
+post /createsections
+```
+
+```
+// ?[{sectionId,sectionName}]
+# To post pages to all section, but you must have pages, ( I have download my google archive keep notes, and used the function sortFileIntoFolder.js and then post all the notes/pages section-wise(folder-wise))
+post /postPagesToAllSections
+
+// a function to post all notes of all sections 
+// to post google archive keep notes to one notes
+```
