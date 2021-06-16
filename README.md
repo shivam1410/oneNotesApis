@@ -58,36 +58,37 @@ GET /notebooks
 
 5. Get all Sections
 ```
-// ?notebookId=
 # To get all your sections, in a notebook ( provide notebookID)
+// ?notebookId=""
 GET /sections',
 ```
 
 6. Get all Pages
 ```
-// ?sectionId
 # To get all your pages, in a section ( provide sectionID)
+// ?sectionId=""
 GET /pages',
 ```
 
 7. Create A Notebook
 ```
-// ?name
 # To create a notebook,(provide name in query)
+// ?name=""
 post /createNotebook',
 ```
 
 8. Create sections
 ```
-// ?notebookId & sections 
 # To create sections ,(provide notebookID and array of section names in query)
+// ?notebookId=""&sections=[] 
 post /createsections
 ```
 
 9. Create pages
 ```
-// ?[{sectionId,sectionName}]
-# To post pages to all section, but you must have pages, ( I have download my google archive keep notes, and used the function sortFileIntoFolder.js and then post all the notes/pages section-wise(folder-wise))
+# To post pages to all section, but you must have pages, ( I have download my google archive keep notes, and used the function sortFileIntoFolder.js and</br>
+then post all the notes/pages section-wise(folder-wise))
+// ?[{sectionId="",sectionName=""}]
 post /postPagesToAllSections
 
 // a function to post all notes of all sections 
