@@ -20,7 +20,7 @@ Implemetation of microsoft Oauth 2.0 code based Authorization, and APIs to read 
 # Getting notes from Google keep
 1. google doesn't provide any API to get data from google Keep, so I got that data from [Google Takeout](https://takeout.google.com/).
 2. In case of google keep, it provides, a html page, and a json for every note you created on Google Keep.
-3. In Node.js, I used Fs-extra to read these files, depending on the labels they have, I created heirarchical folder.
+3. In Node.js, I used Fs-extra to read these files. And depending on the labels(json key) they have, I created heirarchical folder.
 4. Those folder name later used to create sections.
 5. And the html files were directly used to create payload data for [onenote apis](https://docs.microsoft.com/en-us/graph/api/section-post-pages?view=graph-rest-1.0) to create notes, with data of type multipart/form-data. 
 
